@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>drag and drop</title>
+	<style type="text/css">
+		#div1,#div2{
+			width: 488px;
+			height: 70px;
+			padding:10px;
+			border:1px solid #aaa;
+		}
+	</style>
+	<script type="text/javascript">
+		//被拖放数据的类型和值
+		function drag(ev){
+			ev.dataTransfer.setData("text",ev.target.id);
+		};
+		//在何处放置被拖动的数据,取消默认无法放置的行为
+		function allowDrag(ev){
+			ev.preventDefault();
+		};
+		//进行放置
+		function drop(ev){
+			ev.preventDefault();
+			var data=ev.dataTransfer.getData("text");//data是被拖放元素的id
+			alert(data)
+			ev.target.appendChild(document.getElementById(data));
+		}
+	</script>
+</head>
+<body>
+	<p>请把W3School的图片拖放到矩形中:</p>
+	<div id="div1" ondrop="drop(event)" ondragover="allowDrag(event)">
+		<img src="w3school_banner.gif" alt="" id="drag1" dragable="true" ondragstart="drag(event)" />
+	</div>
+	
+	<div id="div2" ondrop="drop(event)" ondragover="allowDrag(event)">
+	</div>
+</body>
+</html>

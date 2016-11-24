@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>轮播图效果</title>
+	<script src="js/jquery.js"></script>
+	<script src="js/jq.js"></script>
+	<style>
+	body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,dl,dt,dd,input,a{
+	margin: 0;
+	padding: 0;
+	font: 12px/150% PingFangSC-Light,'helvetica neue','hiragino sans gb',tahoma,'microsoft yahei ui','microsoft yahei',simsun,sans-serif;
+	}
+	li{
+	list-style: none;
+	}
+	a{
+		text-decoration: none;
+	}
+	#panel {
+    position: relative;
+    width: 1210px;
+    height: 454px;
+    margin: 0 auto;
+    overflow: hidden;
+	}
+	#panel .panel-main{
+		width: 3912px;
+		overflow: hidden;
+	}
+	
+	#panel .slider-panel{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		display: none;
+		
+		opacity: 1;
+		/*z-index: 2;*/
+		list-style: none;
+	}
+	#panel .slider-panel:first-of-type {
+		display: block;
+	}
+
+	#panel .panel-main a{
+		width: 652px;
+		height: 406px;
+		margin: 10px 250px 0 246px;
+		
+	}
+	#panel .active{
+	display: block;
+	}
+
+	#slider-btn{
+		position: absolute;
+		width: 160px;
+		bottom: 10px;
+		left: 50%;
+		margin-left: -80px;
+		z-index: 2;
+	}
+	#slider-btn .slide-nav{
+		height: 18px;
+	}
+	 .slide-nav .slide-item{
+	  	width: 18px;
+	    height: 18px;
+	    line-height: 18px;
+	  	float: left;
+	    margin: 0 4px;
+	    background: #3e3e3e;
+	    border-radius: 50%;
+	    text-align: center;
+	    color: #fff;
+	    cursor: pointer;
+	 }
+	 .slide-nav .on{
+	 	background: #b61b1f;
+	 }
+	 #panel .arr{
+	 	display: none;
+	 	position: absolute;
+	 	top: 50%;
+	    margin-top: -31px;
+	    z-index: 3;
+	    width: 28px;
+	    height: 62px;
+	    line-height: 62px;
+	    background: gray;
+	    background: rgba(0,0,0,.4);
+	    color: #fff;
+	    text-align: center;
+	    font-size: 22px;
+	    font-family: simsun;
+	 }
+	 #panel #prev{
+		left:246px;
+	}
+	#panel #next{
+		right:234px;
+	}
+	#panel:hover .arr{
+		display: block;
+	}
+	</style>
+</head>
+<body>
+	<div class="pubBox" id="panel">
+		<ul class="panel-main">
+			<li class="slider-panel">
+				<a href=""><img src="images/panel1.jpg" alt=""></a>
+			</li>
+			<li class="slider-panel">
+				<a href=""><img src="images/panel2.jpg" alt=""></a>
+			</li>
+			<li class="slider-panel">
+				<a href=""><img src="images/panel3.jpg" alt=""></a>
+			</li>
+			<li class="slider-panel">
+				<a href=""><img src="images/panel4.jpg" alt=""></a>
+			</li>
+			<li class="slider-panel">
+				<a href=""><img src="images/panel5.jpg" alt=""></a>
+			</li>
+			<li class="slider-panel">
+				<a href=""><img src="images/panel6.jpg" alt=""></a>
+			</li>
+		</ul>
+		<div id="slider-btn">
+			<ul class="slide-nav clearfloat">
+						<li class="slide-item on">1</li>
+						<li class="slide-item">2</li>
+						<li class="slide-item">3</li>
+						<li class="slide-item">4</li>
+						<li class="slide-item">5</li>
+						<li class="slide-item">6</li>
+			</ul>
+		</div>
+		<a href="" class="arr" id="prev"><</a>
+		<a href="" class="arr" id="next">></a>
+	</div>
+	<script>
+			var i=0;
+			var timer=null;
+		    var iNow=0;
+		    var n=0;
+		    console.log("n0="+n);
+			//循环遍历每个按钮
+			$('#slider-btn li').each(
+				function(count){
+					//按钮的点击事件
+					$(this).click(function(){//点击当前按钮时
+						var index=$(this).index(); //获取哪个按钮被点击，也就是找到被点击按钮的索引值
+		            	iNow=index;
+						var j=0;
+						//循环遍历所有的图片和按钮，让所有图片先隐藏，按钮先默认
+						$('#slider-btn li').each(
+							function (j) {
+								$('#panel li').eq(j).css('display','none');
+								$('#slider-btn li').eq(j).removeClass('on');
+								$('#slider-btn li').eq(count).fadeIn(1000).addClass('on');
+								$('#panel li').eq(count).fadeIn(1000).css('display','block');
+						});
+						if (timer){
+							clearInterval(timer);
+							timer=setInterval(autoGo,3000);
+						}else{
+							timer=setInterval(autoGo,3000);
+						}
+					});
+					//鼠标移入，停止自动切换
+					$('#panel li').eq(count).mouseover(function (){
+						clearInterval(timer);
+					});
+					//鼠标移出，开始自动切换
+					$('#panel li').eq(count).mouseout(function (){
+						timer=setInterval(autoGo,3000);
+					})	
+			});
+			
+			timer=setInterval(autoGo,3000);
+		    function autoGo(){//切换图片
+		    	iNow ++;
+				iNow %=6;
+				$('#slider-btn li').eq(iNow).trigger('click');
+			};
+			//点击右箭头
+			$('#next').click(function(){
+				autoGo();
+				return false;
+			});
+			//点击左箭头
+			$('#prev').click(function(){
+				iNow --;
+				if(iNow<0) {
+					iNow=n-1;
+				};
+				$('#slider-btn li').eq(iNow).trigger('click');
+				return false;
+			})		
+	</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>定位导航效果</title>
+	<script src="http://libs.baidu.com/jquery/1.10.2/jquery.js"></script>
+	<style>
+		*{
+			margin: 0;
+			padding:0;
+		}
+		a{
+			text-decoration: none;
+
+		}
+		li{
+			list-style: none;
+		}
+		.menu{
+			position: fixed;
+			top: 100px;
+			left: 550px;
+			font-family: Arial;
+
+		}
+		.menu li{
+			height: 30px;
+			line-height: 30px;
+			border-bottom: 1px dotted #ccc;
+			
+		}
+		.menu li:hover a{
+		
+		}
+		.menu li span{
+			display: none;
+			padding: 2px;
+			color: #625351;
+			text-align: center;
+			line-height: 26px;
+		}
+		.menu li:hover span{
+			display: block;
+			background: #c81623;
+			color: #fff;
+		}
+		.menu li a{
+			width: 46px;
+			padding: 6px;
+			color: #625351;
+		}
+		.menu li a:hover{
+			background: #c81623;
+			color: #fff;
+
+		}
+		.menu li a.current{
+			background: #c81623;
+			color: #fff;
+		}
+		.content{
+			width: 730px;
+			margin: 0 auto;
+			padding-top: 100px;
+            padding-bottom: 300px;
+		}
+	</style>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(window).scroll(function(){
+				var top=$(document).scrollTop();	//滚动条滚动的距离 
+				 // console.log(top);	
+				var menu=$(".menu");
+				var items=$(".content .item");
+				var currentId="";//给当前楼层设置id
+				//遍历楼层内容,获得当前楼层的id
+				items.each(function(){
+					var m=$(this);//保存当前楼层
+					var iTop = m.offset().top;//当前楼层距离浏览器顶部的距离
+					//console.log(iTop);
+					//判断iTop和top的大小,多减去300是为了在上一个楼层结束之前菜单指引就先显示
+					if (top>iTop-300) {
+						currentId="#"+m.attr("id");
+					}else{
+						return false;
+					}
+				});
+				//设置和当前楼层id相同的menu的href，给其增加current的class	
+				var currentLink=menu.find(".current");
+				if (currentLink&&currentLink.attr("href")!=currentId) {
+					currentLink.removeClass("current");
+					menu.find("[href="+currentId+"]").addClass("current");
+				};
+			});
+			
+		})
+	</script>
+</head>
+<body>
+	<div class="menu">
+		<ul>
+			<li><a href="#item1" class="current">1F</a></li>
+			<li><a href="#item2">2F</a></li>
+			<li><a href="#item3">3F</a></li>
+			<li><a href="#item4">4F</a></li>
+			<li><a href="#item5">5F</a></li>
+		</ul>
+	</div>
+	<div class="content">
+		<div id="item1" class="item"><img src="images/1.jpg" alt=""></div>
+		<div id="item2" class="item"><img src="images/2.jpg" alt=""></div>
+		<div id="item3" class="item"><img src="images/3.jpg" alt=""></div>
+		<div id="item4" class="item"><img src="images/4.jpg" alt=""></div>
+		<div id="item5" class="item"><img src="images/5.jpg" alt=""></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas</title>
+</head>
+<body>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="190">
+		<polygon points="100,10 40,180 190,60 10,60 160,180 " style="fill:red;stroke:blue;stroke-width:3;fill-rule:evenodd;"/>
+	</svg>
+	<canvas id="myCanvas" width="200" height="100" style="border:1px solid #c3c3c3;">
+	Your browser does not support the canvas element.
+	</canvas>
+	<script type=text/javascript>
+		
+		// var c=document.getElementById("myCanvas");
+		// var cxt=c.getContext("2d");
+		// 	cxt.fillStyle="#FF0000";
+		// 	cxt.beginPath();
+		// 	cxt.arc(20,70,15,0,Math.PI*2,true);//arc(x,y,r,startRad,endRad,),其中x,y是圆心坐标,r是半径,startRad是起始弧度,true是逆时针,默认是顺时针
+		// 	cxt.closePath();
+		// 	cxt.fill();	
+		// var c=document.getElementById("myCanvas");
+		// var cxt=c.getContext("2d");
+		// var grd=cxt.createLinearGradient(0,0,200,50);
+		// grd.addColorStop(0,"#ff0000");
+		// grd.addColorStop(1,"#00ff00");
+		// cxt.fillStyle=grd;
+		// cxt.fillRect(0,0,200,50);
+		var c=document.getElementById("myCanvas");
+		var cxt=c.getContext("2d");
+		var img=new Image();
+		img.src="xz.jpg";
+		cxt.drawImage(img,0,0);
+	</script>
+</body>
+</html>
