@@ -167,3 +167,16 @@ var Event={
 		return ev;
 	}
 };
+//数组去重
+function unique(arr){
+	var resultArr = [];//存放最后结果的数组
+	var obj = {};//定义一个对象，用来将存放数组的值作为对象的属性
+	for( var i=0;i<arr.length;i++){
+		var ele = arr[i];//ele 存放数组的值
+		if (!obj[ele]) {
+			obj[ele] = true;//如果对象的属性不存在就说明没有重复的元素，将其属性值设为true
+			resultArr.push(ele);//将元素值push到结果数组中
+		};
+	};
+	return resultArr;
+}
